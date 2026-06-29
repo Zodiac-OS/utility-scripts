@@ -1,0 +1,236 @@
+# level10k instant pompt. Should stay close to the top of ~/.zshrc
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loadobbyrussell"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' frequency 14
+
+# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' mode reminder
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="false"
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+# plugins=(git)
+
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuratio
+
+# =============================================================================
+# Powerlevel10k Instant Prompt
+# =============================================================================
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# =============================================================================
+# PATH
+# =============================================================================
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+# =============================================================================
+# Oh My Zsh
+# =============================================================================
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+zstyle ':omz:update' mode reminder
+zstyle ':omz:update' frequency 14
+
+ENABLE_CORRECTION="false"
+
+# Faster git status in large repos
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+
+source "$ZSH/oh-my-zsh.sh"
+
+# =============================================================================
+# Editor
+# =============================================================================
+export EDITOR="vim"
+export VISUAL="vim"
+
+# =============================================================================
+# Clipboard
+# =============================================================================
+if command -v xclip >/dev/null 2>&1; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
+# =============================================================================
+# System aliases
+# =============================================================================
+alias reboot='sudo systemctl reboot'
+alias shutdown='sudo systemctl poweroff'
+
+alias sys-upgrade='sudo apt update && sudo apt full-upgrade -y'
+alias sys-cleanup='sudo apt autoremove --purge -y && sudo apt clean'
+
+# =============================================================================
+# Git aliases
+# =============================================================================
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit -v'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gpl='git pull'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias gco='git checkout'
+alias gb='git branch'
+
+# =============================================================================
+# File and directory aliases
+# =============================================================================
+alias ls='ls --color=auto'
+alias l='ls -lah'
+alias la='ls -A'
+alias ll='ls -larth'
+alias lt='ls -lhtr'
+alias lsize='ls -lhS'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+
+# Safer recursive delete
+alias rmd='rm -ri'
+
+# =============================================================================
+# Utility aliases
+# =============================================================================
+alias reload='source ~/.zshrc'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias grep='grep --color=auto'
+
+# =============================================================================
+# Linux Desktop Helper
+# =============================================================================
+switch_to_lightdm() {
+  sudo apt purge kde-plasma-desktop kubuntu-desktop sddm
+  sudo apt autoremove --purge -y
+  sudo apt install lightdm
+  sudo dpkg-reconfigure lightdm
+}
+
+# =============================================================================
+# LS Colors
+# =============================================================================
+export LS_COLORS="di=01;35:ln=01;36:so=01;33:pi=40;33:ex=01;32:bd=40;33;01:cd=40;33;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:*.tar=01;31:*.gz=01;31:*.zip=01;31:*.jpg=35:*.jpeg=35:*.png=35:*.bmp=35:*.svg=35:*.pdf=01;34:*.sh=01;32:*.js=01;33:*.css=01;36"
+
+# =============================================================================
+# Lazy-load NVM
+# =============================================================================
+export NVM_DIR="$HOME/.nvm"
+
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+
+node() {
+  unset -f node
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  node "$@"
+}
+
+npm() {
+  unset -f npm
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  npm "$@"
+}
+
+npx() {
+  unset -f npx
+  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+  npx "$@"
+}
+
+# =============================================================================
+# Powerlevel10k Config
+# =============================================================================
+[[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
