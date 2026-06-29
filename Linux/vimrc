@@ -1,0 +1,269 @@
+" =============================================================================
+" Vim Configuration
+" =============================================================================
+"
+" Author      : Arup
+" Purpose     : Personal Vim configuration focused on software development.
+"
+" Design Goals
+" ------------
+" - Fast startup and responsive editing.
+" - Consistent 4-space indentation.
+" - Modern editing experience while remaining pure Vim.
+" - Safe editing with persistent undo, swap and backup files.
+" - Minimal but productive key mappings.
+"
+" Required directories (create once):
+"
+"   mkdir -p ~/.vim/{undo,backup,swap}
+"
+" Reload configuration after changes:
+"
+"   :source ~/.vimrc
+"
+" =============================================================================
+
+
+" =============================================================================
+" Core Configuration
+" =============================================================================
+
+" Disable legacy Vi compatibility and enable modern Vim features.
+set nocompatible
+
+" Enable filetype detection, plugins and indentation rules.
+filetype plugin indent on
+
+" Enable syntax highlighting.
+syntax enable
+
+" Use UTF-8 for files and scripts.
+set encoding=utf-8
+scriptencoding utf-8
+
+" Define leader key.
+"
+" IMPORTANT:
+" Must be configured BEFORE any <leader> mappings.
+let mapleader = ","
+
+
+" =============================================================================
+" User Interface
+" =============================================================================
+
+" Display absolute line number on current line and relative numbers elsewhere.
+" Relative numbering makes movement commands like 5j, 10k much easier.
+set number
+set relativenumber
+
+" Highlight current editing line.
+set cursorline
+
+" Highlight matching brackets when cursor is over one.
+set showmatch
+
+" Display current cursor position.
+set ruler
+
+" Show partially typed commands.
+set showcmd
+
+" Always display status line.
+set laststatus=2
+
+" Keep cursor away from screen edges while scrolling.
+set scrolloff=5
+set sidescrolloff=8
+
+" Disable automatic wrapping of long lines.
+set nowrap
+
+" Prevent breaking words if wrapping is enabled manually.
+set linebreak
+
+" Use dark background optimized colorscheme.
+set background=dark
+colorscheme retrobox
+
+
+" =============================================================================
+" Indentation
+" =============================================================================
+
+" Standardize indentation across projects.
+"
+" Tab key        -> inserts 4 spaces
+" Auto-indent    -> 4 spaces
+" Existing tabs  -> displayed as width 4
+"
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+" Always insert spaces instead of TAB characters.
+set expandtab
+
+" Smart indentation behavior.
+set smarttab
+set autoindent
+set smartindent
+
+
+" =============================================================================
+" Search
+" =============================================================================
+
+" Highlight matches while searching.
+set hlsearch
+
+" Show matches as pattern is typed.
+set incsearch
+
+" Ignore case unless uppercase letters are used.
+"
+" Examples:
+"   /hello    -> hello, Hello, HELLO
+"   /Hello    -> only Hello
+"
+set ignorecase
+set smartcase
+
+" Double ESC clears search highlighting.
+nnoremap <Esc><Esc> :nohlsearch<CR>
+
+
+" =============================================================================
+" Editing Experience
+" =============================================================================
+
+" Allow switching buffers without saving.
+set hidden
+
+" Store larger command/search history.
+set history=1000
+
+" Make Backspace behave like modern editors.
+set backspace=indent,eol,start
+
+" Better command-line completion.
+set wildmenu
+set wildmode=longest:full,full
+
+" Open new horizontal splits below current window.
+set splitbelow
+
+" Open new vertical splits to the right.
+set splitright
+
+
+" =============================================================================
+" Clipboard & Mouse
+" =============================================================================
+
+" Enable mouse support in all modes.
+set mouse=a
+
+" Better right-click behavior in terminal Vim.
+set mousemodel=popup_setpos
+
+" Integrate Vim with system clipboard when available.
+"
+" y  -> copies to OS clipboard
+" p  -> pastes from OS clipboard
+"
+if has('clipboard')
+    set clipboard=unnamedplus
+endif
+
+
+" =============================================================================
+" Undo, Backup & Recovery
+" =============================================================================
+
+" Enable persistent undo across editing sessions.
+set undofile
+
+if has('persistent_undo')
+    set undodir=~/.vim/undo//
+endif
+
+" Store backup files outside project directories.
+set backup
+set backupdir=~/.vim/backup//
+
+" Enable swap files for crash recovery.
+set swapfile
+set directory=~/.vim/swap//
+
+" Write backup before overwriting original file.
+set writebackup
+
+
+" =============================================================================
+" Performance
+" =============================================================================
+
+" Optimize screen redraw in terminal.
+set ttyfast
+
+" Avoid unnecessary redraws during macros and scripts.
+set lazyredraw
+
+" Faster CursorHold events and plugin responsiveness.
+set updatetime=300
+
+" Reduce delay when waiting for mapped key sequences.
+set timeoutlen=500
+
+
+" =============================================================================
+" Keyboard Shortcuts
+" =============================================================================
+"
+" Leader key: ,
+"
+" ,w   Save file
+" ,q   Quit
+" ,x   Save and quit
+" ,sv  Reload ~/.vimrc
+" ,ev  Edit ~/.vimrc
+"
+" Ctrl+h/j/k/l
+"   Navigate between split windows.
+"
+" Double ESC
+"   Clear search highlighting.
+"
+" =============================================================================
+
+" Save current file.
+nnoremap <leader>w :w<CR>
+
+" Quit current window.
+nnoremap <leader>q :q<CR>
+
+" Save and quit.
+nnoremap <leader>x :x<CR>
+
+" Reload configuration.
+nnoremap <leader>sv :source ~/.vimrc<CR>
+
+" Edit configuration.
+nnoremap <leader>ev :edit ~/.vimrc<CR>
+
+" Fast split navigation.
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+
+" =============================================================================
+" Mouse Integration
+" =============================================================================
+
+" Paste clipboard contents with right-click.
+nnoremap <RightMouse> "+p
+inoremap <RightMouse> <C-R>+
+vnoremap <RightMouse> "+p

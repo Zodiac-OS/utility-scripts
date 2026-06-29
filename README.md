@@ -1,6 +1,6 @@
 # Utility Scripts
 
-Utility Scripts is a small collection of shell scripts and shell configuration files for setting up a Git and GitHub workflow quickly on a new machine. The repository is organized by operating system and focuses on common developer setup tasks such as creating SSH keys, creating GPG signing keys, configuring global Git settings, syncing a local project to GitHub, and bootstrapping a productive shell environment.
+Utility Scripts is a small collection of shell scripts and shell configuration files for setting up a Git and GitHub workflow quickly on a new machine. The repository is organized by operating system and focuses on common developer setup tasks such as creating SSH keys, creating GPG signing keys, configuring global Git settings, syncing a local project to GitHub, and bootstrapping a productive shell and editor environment.
 
 The goal is to make repeatable setup easier: instead of remembering every command, you can run the script for the task you need and follow the prompts.
 
@@ -13,6 +13,7 @@ The goal is to make repeatable setup easier: instead of remembering every comman
 - Open the relevant GitHub settings page so you can paste the generated key.
 - Sync a local directory to a GitHub repository from the command line.
 - Reuse a Linux Zsh configuration with Oh My Zsh, Powerlevel10k, common aliases, clipboard helpers, and lazy NVM loading.
+- Reuse a Linux Vim configuration with modern editing defaults, persistent undo, safe backup locations, and practical key mappings.
 
 ## Repository Structure
 
@@ -21,6 +22,7 @@ The goal is to make repeatable setup easier: instead of remembering every comman
 ├── Linux/
 │   ├── generate_gpg_key.sh    # Generate a Linux GPG key and enable Git commit signing
 │   ├── generate_ssh_key.sh    # Generate a Linux SSH key and test GitHub SSH access
+│   ├── vimrc                  # Linux Vim configuration for software development
 │   └── zshrc                  # Linux Zsh configuration for Oh My Zsh and developer aliases
 ├── Mac/
 │   ├── generate_gpg_key.sh    # Generate a macOS GPG key and enable Git commit signing
@@ -76,6 +78,18 @@ If no clipboard tool is available, the scripts print the public key in the termi
 - `zsh-autosuggestions` and `zsh-syntax-highlighting` installed as Oh My Zsh plugins
 - `xclip` for `pbcopy` and `pbpaste` compatibility aliases on Linux
 - NVM installed at `~/.nvm` if you want the lazy-loaded `node`, `npm`, `npx`, and `nvm` functions
+
+### Optional for `Linux/vimrc`
+
+- Vim with clipboard support if you want OS clipboard integration
+- A terminal that supports mouse input if you want mouse mode
+- Writable Vim state directories for persistent undo, backups, and swap files
+
+Create the state directories once before using the config:
+
+```bash
+mkdir -p ~/.vim/{undo,backup,swap}
+```
 
 ## Getting Started
 
@@ -247,6 +261,37 @@ source ~/.zshrc
 
 Review the file before copying it if you already have custom aliases, PATH changes, plugins, or shell initialization logic.
 
+### `Linux/vimrc`
+
+Use this as a reusable Linux `~/.vimrc` configuration for fast, practical software development in Vim.
+
+It includes:
+
+- Modern Vim behavior with `nocompatible`, filetype detection, syntax highlighting, and UTF-8 support.
+- `,` as the leader key for common commands.
+- Absolute and relative line numbers for easier navigation.
+- Cursor line, matching bracket, ruler, command, and always-on status line display.
+- Dark-background styling with the `retrobox` colorscheme.
+- Consistent 4-space indentation with spaces instead of tab characters.
+- Highlighted, incremental, smart-case search.
+- Double `Esc` to clear search highlighting.
+- Hidden buffers, larger command history, modern backspace behavior, and improved command-line completion.
+- Mouse support and OS clipboard integration when Vim has clipboard support.
+- Persistent undo, backup files, swap files, and write backups stored under `~/.vim`.
+- Terminal performance settings for smoother redraws and faster mapped key handling.
+- Leader shortcuts for save, quit, save-and-quit, editing `~/.vimrc`, and reloading the config.
+- `Ctrl+h`, `Ctrl+j`, `Ctrl+k`, and `Ctrl+l` split navigation.
+
+Install it by creating the required directories, backing up your current config, and copying this file:
+
+```bash
+mkdir -p ~/.vim/{undo,backup,swap}
+[ -f ~/.vimrc ] && cp ~/.vimrc ~/.vimrc.backup
+cp Linux/vimrc ~/.vimrc
+```
+
+Review the file before copying it if you already have custom mappings, indentation rules, colorscheme settings, or plugin configuration.
+
 ### `Mac/sync-to-github.sh`
 
 Use this to initialize a local folder and push it to a GitHub repository.
@@ -307,6 +352,9 @@ git config --global user.email "you@example.com"
 ./Linux/generate_gpg_key.sh
 # Optional: review and install the shared Zsh config
 cp Linux/zshrc ~/.zshrc
+# Optional: review and install the shared Vim config
+mkdir -p ~/.vim/{undo,backup,swap}
+cp Linux/vimrc ~/.vimrc
 ```
 
 ## Safety Notes
@@ -317,6 +365,7 @@ cp Linux/zshrc ~/.zshrc
 - GPG keys generated by these scripts use no passphrase protection. If you need stronger local key protection, review and modify the script before running it.
 - The sync script runs `git add .`, so check the target directory before using it to avoid committing files you did not intend to publish.
 - Back up your existing `~/.zshrc` before replacing it with `Linux/zshrc`; it may overwrite personal aliases, PATH entries, or plugin settings.
+- Back up your existing `~/.vimrc` before replacing it with `Linux/vimrc`; it may overwrite personal mappings, indentation rules, colorscheme choices, or plugin settings.
 
 ## Troubleshooting
 
@@ -359,7 +408,7 @@ git config --global gpg.format
 
 Contributions are welcome.
 
-If you add a new script:
+If you add a new script or configuration file:
 
 1. Put it in the correct platform folder.
 2. Use a clear, descriptive filename.
